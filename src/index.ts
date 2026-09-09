@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { errorMiddleware } from "./middleware/error.middleware.js";
+import { authRouter } from "./routes/auth.route.js";
 dotenv.config();
 
 // Variables
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use("/api/auth", authRouter);
 app.use(errorMiddleware);
 
 // Run Server
