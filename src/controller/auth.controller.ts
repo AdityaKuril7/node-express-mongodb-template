@@ -1,6 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { signupValidation } from "../validations/auth.validation.js";
+import {
+  loginValidation,
+  signupValidation,
+} from "../validations/auth.validation.js";
 import { ApiError } from "../utils/responseHandler.js";
 import { UserModel } from "../model/user.model.js";
 import bcrypt from "bcrypt";
@@ -15,7 +18,7 @@ export const signup = asyncHandler(async (req: Request, res: Response) => {
 
   const { username, email, password } = result.data;
 
-  const isUserExsist = await UserModel.findOne({ $where: { email } });
+  const isUserExsist = await UserModel.findOne({ email });
 
   if (isUserExsist) throw new ApiError("User already exsist", 400);
 
@@ -29,7 +32,7 @@ export const signup = asyncHandler(async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   const body = req.body;
-  const result = signupValidation.safeParse(body);
+  const result = loginValidation.safeParse(body);
 
   if (!result.success) {
     throw new ApiError("Bad Request", 400);
@@ -37,7 +40,7 @@ export const login = async (req: Request, res: Response) => {
 
   const { email, password } = result.data;
 
-  const user = await UserModel.findOne({ $where: { email } });
+  const user = await UserModel.findOne({ email });
 
   if (!user) throw new ApiError("Invalid username and password", 400);
 
