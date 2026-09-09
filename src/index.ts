@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { errorMiddleware } from "./utils/responseHandler.js";
+import { errorMiddleware } from "./middleware/error.middleware.js";
 dotenv.config();
 
 // Variables
