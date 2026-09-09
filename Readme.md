@@ -55,9 +55,11 @@ src/
 
 ### Installation
 
+Use [degit](https://github.com/Rich-Harris/degit) to clone this template without git history:
+
 ```bash
-git clone <your-repo-url>
-cd <project-folder>
+npx degit AdityaKuril7/node-express-mongo-template my-new-project
+cd my-new-project
 npm install
 ```
 
@@ -99,30 +101,39 @@ Server starts on the port defined in `.env` (default: `5000`).
 **Signup — Request Body**
 ```json
 {
-  "email": "user@example.com",
+  "username": "RamPatil",
+  "email": "rampatil@gmail.com",
   "password": "yourpassword"
+}
+```
+
+**Signup — Response**
+```json
+{
+  "user": {
+    "username": "RamPatil",
+    "email": "rampatil@gmail.com",
+    "_id": "6aa19e53dd2d4d409060644a",
+    "createdAt": "2026-09-09T17:58:43.057Z",
+    "updatedAt": "2026-09-09T17:58:43.057Z",
+    "__v": 0
+  },
+  "message": "User created successfully"
 }
 ```
 
 **Login — Request Body**
 ```json
 {
-  "email": "user@example.com",
+  "email": "rampatil@gmail.com",
   "password": "yourpassword"
 }
 ```
 
-**Response Format**
-
-All responses follow a consistent shape via `responseHandler`:
-
+**Login — Response**
 ```json
 {
-  "success": true,
-  "message": "Login successful",
-  "data": {
-    "token": "..."
-  }
+  "message": "Login successfully"
 }
 ```
 

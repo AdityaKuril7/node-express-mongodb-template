@@ -18,19 +18,23 @@ export const signup = asyncHandler(async (req: Request, res: Response) => {
 
   const { username, email, password } = result.data;
 
-  const isUserExsist = await UserModel.findOne({ email });
+  const isUserExist = await UserModel.findOne({ email });
 
-  if (isUserExsist) throw new ApiError("User already exsist", 400);
+  if (isUserExist) throw new ApiError("User already exist", 400);
 
   const user = await UserModel.create({ username, email, password });
 
+  const { password: _, ...userWithoutPassword } = user.toObject();
+
   return res.status(201).json({
-    user,
+    user: userWithoutPassword,
     message: "User created successfully",
   });
 });
 
-export const login = async (req: Request, res: Response) => {
+
+
+export const login = asyncHandler(async (req: Request, res: Response) => {
   const body = req.body;
   const result = loginValidation.safeParse(body);
 
@@ -65,4 +69,4 @@ export const login = async (req: Request, res: Response) => {
   return res.status(200).json({
     message: "Login successfully",
   });
-};
+});
