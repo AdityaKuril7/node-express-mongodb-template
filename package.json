@@ -1,7 +1,7 @@
 {
-  "name": "small-ecommerce",
+  "name": "node-express-mongo-template",
   "version": "1.0.0",
-  "description": "This is the project for the learning purpose ",
+  "description": "A starter template for Node.js + Express + MongoDB projects with JWT auth, Zod validation, and TypeScript.",
   "author": "AdityaKuril7",
   "type": "module",
   "main": "index.js",
