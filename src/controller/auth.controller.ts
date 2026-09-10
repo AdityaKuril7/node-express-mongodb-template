@@ -8,6 +8,7 @@ import { ApiError } from "../utils/responseHandler.js";
 import { UserModel } from "../model/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { generateToken } from "../utils/jwt.js";
 export const signup = asyncHandler(async (req: Request, res: Response) => {
   const body = req.body;
   const result = signupValidation.safeParse(body);
@@ -32,8 +33,6 @@ export const signup = asyncHandler(async (req: Request, res: Response) => {
   });
 });
 
-
-
 export const login = asyncHandler(async (req: Request, res: Response) => {
   const body = req.body;
   const result = loginValidation.safeParse(body);
@@ -53,11 +52,11 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
   if (!isPasswordCorrect)
     throw new ApiError("Invalid username and password", 400);
 
-  const token = jwt.sign(
-    { userId: user.id, email: user.email, username: user.username },
-    process.env.JWT_SECRET!,
-    { expiresIn: "7d" },
-  );
+  const token = generateToken({
+    userId: user.id,
+    email: user.email,
+    username: user.username,
+  });
 
   res.cookie("token", token, {
     httpOnly: true,
